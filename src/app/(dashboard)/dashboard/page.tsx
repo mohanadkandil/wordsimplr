@@ -6,26 +6,22 @@ import { type FC, useEffect, useState } from "react";
 import { Microphone } from "icons";
 import { Button } from "@/components/ui/button";
 import Card from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 const Page: FC = () => {
   const [transcribedText, setTranscribedText] = useState(
     "I'm always thinking about implementing user interactions and transcriptions so I'm always looking for a new behavior in. So thank you so much for your help. This is Monica Ndio."
   );
 
-  const {
-    transcript,
-    transcribing,
-    pauseRecording,
-    startRecording,
-    stopRecording,
-  } = useWhisper({
-    apiKey: "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",
-    streaming: true,
-    timeSlice: 1_000,
-    whisperConfig: {
-      language: "en",
-    },
-  });
+  const { transcript, transcribing, startRecording, recording, stopRecording } =
+    useWhisper({
+      apiKey: "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",
+      streaming: true,
+      timeSlice: 1_000,
+      whisperConfig: {
+        language: "en",
+      },
+    });
 
   const generateSummarizedText = async (e: any) => {
     e.preventDefault();
@@ -45,6 +41,11 @@ const Page: FC = () => {
     return answer;
   };
 
+  const startRecordingProcess = async () => {
+    if (recording) await stopRecording();
+    else await startRecording();
+  };
+
   useEffect(() => {
     if (transcribing === false)
       if (transcript.text) setTranscribedText(transcript.text);
@@ -60,21 +61,30 @@ const Page: FC = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="mx-24 my-8 flex min-h-screen flex-col">
-        <div className="mt-20 flex flex-col items-center gap-5">
-          <p className="-z-10 text-3xl font-bold">
+        <div className="mt-10 flex flex-col items-center gap-5">
+          <p className="text-3xl font-bold">
             Transform jumbled ideas into crystal-clear text effortlessly
           </p>
-          <button
-            onClick={() => startRecording()}
-            className="flex h-20 w-20 items-center justify-center rounded-full border border-[#D0D5E6]"
-          >
-            <Microphone className="h-16 w-16" />
-          </button>
-          <Button variant="secondary" onClick={generateSummarizedText}>
-            Summarize
-          </Button>
-          <button onClick={() => pauseRecording()}>Pause</button>
-          <button onClick={() => stopRecording()}>Stop</button>
+          <div className="flex flex-col items-center gap-4 py-4">
+            <button
+              onClick={() => startRecordingProcess()}
+              className={cn(
+                "flex h-20 w-20 items-center justify-center rounded-full border border-[#D0D5E6]",
+                recording ? "bg-[#59E881]" : null
+              )}
+            >
+              <Microphone className="h-16 w-16 font-thin" />
+            </button>
+            <Button
+              variant="destructive"
+              size="sm"
+              className="rounded-[8px] bg-[#59E881]"
+              onClick={generateSummarizedText}
+            >
+              Summarize
+            </Button>
+          </div>
+
           <p>{transcript.text}</p>
         </div>
         <section className="mt-24 flex flex-col items-center">
