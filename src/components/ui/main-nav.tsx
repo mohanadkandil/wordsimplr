@@ -37,7 +37,7 @@ export default function MainNav({ user, expires }: Session) {
   };
 
   return (
-    <div className="mx-12 my-12 flex justify-between text-center">
+    <div className="mx-12 flex justify-between py-12 text-center">
       <h2 className="text-2xl font-bold">
         Audio<span className="text-[#1FB2A7]">AI</span>
       </h2>
