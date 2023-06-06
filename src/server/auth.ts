@@ -26,14 +26,12 @@ declare module "next-auth" {
 }
 
 export const authOptions: NextAuthOptions = {
-  callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
-      },
-    }),
+  session: {
+    strategy: "jwt"
+  },
+  pages: {
+    signIn: '/login',
+    error: '/login'
   },
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -42,6 +40,43 @@ export const authOptions: NextAuthOptions = {
       clientSecret: env.GOOGLE_CLIENT_SECRET,
     }),
   ],
+  callbacks: {
+    
+    async jwt({token, user}) {
+      const dbUser = await prisma.user.findUnique({
+        where: {
+          email: token.email as string
+        }
+      })
+      
+      if (!dbUser) {
+        token.id = user.id
+        return token
+      }
+      
+      return {
+        id: dbUser.id,
+        name: dbUser.name,
+        email: dbUser.email,
+        image: dbUser.image
+      }
+    },
+
+    async session({ session, token }) {
+      if (token) {
+        session.user.id = token.id
+        session.user.name = token.name
+        session.user.email = token.email
+        session.user.image = token.picture
+      }
+
+      return session
+    },
+    
+    redirect() {
+      return '/dashboard'
+    },
+  },
 
 };
 

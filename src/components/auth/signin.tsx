@@ -1,25 +1,20 @@
-import { authOptions } from "@/server/auth";
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Google } from "icons/google";
 import { Loader2 } from "lucide-react";
-import { getServerSession } from "next-auth";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 
-export async function SignInDialog() {
-  const session = await getServerSession(authOptions);
-  console.log(session);
+export function SignInDialog() {
   const [isLoading, setIsLoading] = useState(false);
 
   const loginWithGoogle = async () => {
