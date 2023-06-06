@@ -1,21 +1,26 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { Google } from "icons/google";
-import { Loader2 } from "lucide-react";
+import { Loader2, Settings } from "lucide-react";
 import { Session } from "next-auth";
 import { signIn, signOut } from "next-auth/react";
 import Image from "next/image";
 import { useState } from "react";
 import { UserNav } from "./user-nav";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Label } from "./label";
+import { Input } from "./input";
+import { DropdownMenuItem, DropdownMenuShortcut } from "./dropdown-menu";
 
 export default function MainNav({ user, expires }: Session) {
   const [isLoading, setIsLoading] = useState(false);
@@ -39,9 +44,11 @@ export default function MainNav({ user, expires }: Session) {
       {!user && (
         <Dialog>
           <DialogTrigger asChild>
-            <Button variant="outline">Sign in</Button>
+            <Button variant="outline" size="sm" className="rounded-[8px]">
+              Sign in
+            </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
+          <DialogContent className="bg-white sm:max-w-[425px]">
             <DialogHeader>
               <DialogTitle>Sign in</DialogTitle>
               <DialogDescription className="font-medium">
@@ -63,7 +70,41 @@ export default function MainNav({ user, expires }: Session) {
         </Dialog>
       )}
 
-      {user && <UserNav user={user} expires={expires} />}
+      {user && (
+        <div className="flex items-center gap-4">
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="outline" size="sm" className="rounded-[8px]">
+                Setup OpenAI
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="bg-white sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>Add OpenAI API Key</DialogTitle>
+                <DialogDescription>
+                  Go to API keys in OpenAI and create a new secret key
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid justify-center gap-4 py-4">
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="name" className="text-right">
+                    API Key
+                  </Label>
+                  <Input
+                    id="name"
+                    placeholder="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"
+                    className="col-span-3"
+                  />
+                </div>
+              </div>
+              <DialogFooter>
+                <Button type="submit">Save changes</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+          <UserNav user={user} expires={expires} />
+        </div>
+      )}
     </div>
   );
 }

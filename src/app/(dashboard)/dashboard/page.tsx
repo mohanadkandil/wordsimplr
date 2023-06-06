@@ -61,7 +61,7 @@ const Page: FC = () => {
       </Head>
       <main className="mx-24 my-8 flex min-h-screen flex-col">
         <div className="mt-20 flex flex-col items-center gap-5">
-          <p className="text-3xl font-bold">
+          <p className="-z-10 text-3xl font-bold">
             Transform jumbled ideas into crystal-clear text effortlessly
           </p>
           <button
