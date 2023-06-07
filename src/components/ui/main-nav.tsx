@@ -2,10 +2,9 @@
 
 import { Button } from "@/components/ui/button";
 import { Google } from "icons/google";
-import { Loader2, Settings } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { Session } from "next-auth";
-import { signIn, signOut } from "next-auth/react";
-import Image from "next/image";
+import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { UserNav } from "./user-nav";
 
@@ -20,8 +19,6 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "./label";
 import { Input } from "./input";
-import { DropdownMenuItem, DropdownMenuShortcut } from "./dropdown-menu";
-
 export default function MainNav({ user, expires }: Session) {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -74,7 +71,11 @@ export default function MainNav({ user, expires }: Session) {
         <div className="flex items-center gap-4">
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="outline" size="sm" className="rounded-[8px]">
+              <Button
+                variant="outline"
+                size="sm"
+                className="z-10 rounded-[8px]"
+              >
                 Setup OpenAI
               </Button>
             </DialogTrigger>

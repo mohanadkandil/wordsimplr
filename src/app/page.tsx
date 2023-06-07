@@ -1,11 +1,8 @@
 "use client";
 
-import { useWhisper } from "@chengsokdara/use-whisper";
-import Head from "next/head";
-import { type FC, useEffect, useRef, useState } from "react";
+import { type FC } from "react";
 import { Landing, Microphone } from "icons";
 import { Button } from "@/components/ui/button";
-import { SignInDialog } from "@/components/auth/signin";
 
 const Page: FC = () => {
   return (
@@ -23,7 +20,7 @@ const Page: FC = () => {
         </div>
         <Landing className="h-[850px] w-[850px]" />
       </div>
-      <div className="flex items-center justify-center">
+      <div className="mt-8 flex items-center justify-center">
         <Button
           variant="outline"
           className="h-12 w-36 rounded-[8px] bg-[#0D9488] text-lg font-semibold text-white"

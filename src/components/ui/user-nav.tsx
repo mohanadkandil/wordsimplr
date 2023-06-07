@@ -8,7 +8,7 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { CreditCard, LogOut, PlusCircle, Settings, User } from "lucide-react";
+import { LogOut } from "lucide-react";
 
 import { Button } from "./button";
 import { Avatar, AvatarImage, AvatarFallback } from "./avatar";
