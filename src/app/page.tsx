@@ -3,6 +3,8 @@
 import { type FC } from "react";
 import { Landing, Microphone } from "icons";
 import { Button } from "@/components/ui/button";
+import { Router, useRouter } from "next/router";
+import Link from "next/link";
 
 const Page: FC = () => {
   return (
@@ -25,7 +27,7 @@ const Page: FC = () => {
           variant="outline"
           className="h-12 w-36 rounded-[8px] bg-[#0D9488] text-lg font-semibold text-white"
         >
-          Get Started
+          <Link href="/dashboard">Get Started</Link>
         </Button>
       </div>
     </main>

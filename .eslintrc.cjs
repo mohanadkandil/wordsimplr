@@ -27,6 +27,9 @@ const config = {
         prefer: "type-imports",
         fixStyle: "inline-type-imports",
       },
+      "checksVoidReturn", {
+        "attributes": false
+      }
     ],
     "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
   },

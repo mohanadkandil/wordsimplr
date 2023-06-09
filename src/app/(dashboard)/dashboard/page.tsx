@@ -7,15 +7,19 @@ import { Arrow, Microphone } from "icons";
 import { Button } from "@/components/ui/button";
 import Card from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { useStore } from "@/stores/openai-key";
 
 const Page: FC = () => {
+  const [apiKey] = useStore((state) => [state.apiKey]);
+
+  console.log(apiKey);
   const [transcribedText, setTranscribedText] = useState(
     "I'm always thinking about implementing user interactions and transcriptions so I'm always looking for a new behavior in. So thank you so much for your help. This is Monica Ndio."
   );
 
   const { transcript, transcribing, startRecording, recording, stopRecording } =
     useWhisper({
-      apiKey: "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",
+      apiKey: apiKey ?? "test",
       streaming: true,
       timeSlice: 1_000,
       whisperConfig: {
@@ -108,3 +112,6 @@ const Page: FC = () => {
 };
 
 export default Page;
+function shallow(state: unknown): unknown {
+  throw new Error("Function not implemented.");
+}

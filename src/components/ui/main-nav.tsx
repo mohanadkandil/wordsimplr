@@ -7,7 +7,6 @@ import { Session } from "next-auth";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { UserNav } from "./user-nav";
-
 import {
   Dialog,
   DialogContent,
@@ -19,8 +18,12 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "./label";
 import { Input } from "./input";
+import Link from "next/link";
+import { useStore } from "@/stores/openai-key";
 export default function MainNav({ user, expires }: Session) {
+  const [updateOpenAIAPIKey] = useStore((state) => [state.updateOpenAIAPIKey]);
   const [isLoading, setIsLoading] = useState(false);
+  const [apiKey, setApiKey] = useState<string | null>(null);
 
   const loginWithGoogle = async () => {
     setIsLoading(true);
@@ -35,9 +38,11 @@ export default function MainNav({ user, expires }: Session) {
 
   return (
     <div className="mx-12 flex justify-between py-12 text-center">
-      <h2 className="text-2xl font-bold">
-        Audio<span className="text-[#1FB2A7]">AI</span>
-      </h2>
+      <Link href="/">
+        <h2 className="text-2xl font-bold">
+          Audio<span className="text-[#1FB2A7]">AI</span>
+        </h2>
+      </Link>
       {!user && (
         <Dialog>
           <DialogTrigger asChild>
@@ -93,16 +98,23 @@ export default function MainNav({ user, expires }: Session) {
                   </Label>
                   <Input
                     id="name"
+                    onChange={(e) => setApiKey(e.target.value)}
                     placeholder="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"
                     className="col-span-3"
                   />
                 </div>
               </div>
               <DialogFooter>
-                <Button type="submit">Save changes</Button>
+                <Button
+                  type="submit"
+                  onClick={() => updateOpenAIAPIKey(apiKey)}
+                >
+                  Save changes
+                </Button>
               </DialogFooter>
             </DialogContent>
           </Dialog>
+
           <UserNav user={user} expires={expires} />
         </div>
       )}
