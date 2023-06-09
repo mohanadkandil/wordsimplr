@@ -17,7 +17,7 @@ export default async function RootLayout({
   const session = await getServerSession();
   return (
     <html lang="en">
-      <body className="relative min-h-screen">
+      <body className=" bg-[#F2F3F5]">
         <MainNav user={session?.user} expires={session?.expires as string} />
         {children}
         <div className="absolute bottom-0 mx-12 flex justify-between space-x-8 py-12 text-center font-thin">

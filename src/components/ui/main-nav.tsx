@@ -20,10 +20,13 @@ import { Label } from "./label";
 import { Input } from "./input";
 import Link from "next/link";
 import { useStore } from "@/stores/openai-key";
+import { usePathname } from "next/navigation";
+
 export default function MainNav({ user, expires }: Session) {
   const [updateOpenAIAPIKey] = useStore((state) => [state.updateOpenAIAPIKey]);
   const [isLoading, setIsLoading] = useState(false);
   const [apiKey, setApiKey] = useState<string | null>(null);
+  const pathname = usePathname();
 
   const loginWithGoogle = async () => {
     setIsLoading(true);
@@ -35,6 +38,8 @@ export default function MainNav({ user, expires }: Session) {
       setIsLoading(false);
     }
   };
+
+  if (pathname === "/") return null;
 
   return (
     <div className="mx-12 flex justify-between py-12 text-center">
