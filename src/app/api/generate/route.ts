@@ -1,9 +1,11 @@
 import openai from "@/utils/openai";
 
 export async function POST(req: Request) {
-    const text = "I'm always thinking about implementing user interactions and transcriptions so I'm always looking for a new behavior in. So thank you so much for your help. This is Monica Ndio.";
-
+    
     try {
+
+        const {text} = req.json()
+
         const completion = await openai.createChatCompletion({
             model: "gpt-3.5-turbo",
             messages: [
@@ -17,6 +19,6 @@ export async function POST(req: Request) {
     return new Response(completion.data.choices[0]?.message?.content, {status: 200})
     
     } catch (error) {
-        console.log(error)
+        return new Response("Invalid request", {status: 400})
     }
 }
